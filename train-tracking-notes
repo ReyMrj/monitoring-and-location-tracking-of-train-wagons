@@ -1,0 +1,103 @@
+--------------------project description:------------------------------
+
+This is a general and initial description, which may be subject to modification and discussion:
+
+The primary objective is to develop a dashboard for a monitoring system for train wagons. The system will encompass the following functionalities:
+
+1. It will receive sensor data (such as GPS location and temperature) from IoT nodes through the MQTT protocol, To facilitate testing, IoT nodes will be simulated using Python or Node.js scripts to transmit MQTT frames.
+2. The data will be stored in a database for the purpose of historical analysis.
+3. Both real-time and historical data will be presented on a web dashboard.
+
+
+Backend Development
+        MQTT Integration:
+                Establish an MQTT broker (for instance, Mosquitto) to collect data from IoT nodes.
+                Develop MQTT clients that subscribe to relevant sensor topics (e.g., sensors/wagon1/gps).
+        Data Processing:
+                Parse incoming MQTT payloads (e.g., JSON) and validate data.
+                Handle edge cases (e.g., duplicate data, network interruptions).
+        Database Design:
+                Select an appropriate database (e.g., PostgreSQL or InfluxDB) tailored for time-series data.
+                Create schemas designed to store information regarding wagon locations, sensor readings, and alerts.
+        API Development:
+                Build RESTful APIs to fetch historical data for the frontend.
+                Secure APIs with authentication (e.g., JWT).
+
+Frontend Development
+        Real-Time Dashboard:
+                Create a web interface (React.js, React native) to display live wagon locations on a map.
+                Implement real-time updates using WebSocket or MQTT over WebSocket.
+        Data Visualization:
+                Add charts (e.g., Chart.js) for trends like temperature or speed.
+                Include tables to show recent alerts (e.g., geofence breaches).
+User Authentication:
+        Design login/registration pages for dispatchers.
+ ---------------------------------------------------------------------------------------
+ purpose bheind the project:
+ 
+ using iot sensors to collect data from train wagons via MQTT, store it in a time-series database and visualize it on a web dashboard.
+ ---------------------------------------------------------------------------------
+ intuition behind the project?
+ 
+ we dont have real train wagons to make a project with right? so basically we will be writing python scripts that themselves act like a  wagon , those scripts will generate gps coordinates to simulate movement and temperature readings to track environmental conditions , all the data will be sent to an MQTT broker every few sec.
+ 
+ but what does MQTT do? mqtt is like a messaging post office , it doesnt store data , but makes sure messages get delieverd effeciently .
+ how does mqtt work? our python scripts that mimic the wagons , publish messages to a specefic topic , for ex:
+ "sensors/wagon1/gps"
+ "sensors/wagon1/temperature"
+the mqtt broker that is mosauitto here , receives theses msgs and forwards them to any service that is subscribed to these topics.
+
+-our backend server(written in python) subscribes to these topics , emnaing it listens and captures every update.
+
+now , we want to store our data right.. once our backend recieves data from MQTT, we need to store it for later analysis, we will use a time-series database bcz: gps and temp readings arrive with timestamps and we need to store historical data to analyze it or even set alerts (wagon heating for ex)
+we can work with postgresql if we want a structured data with sql quering , or influxDB if we want a specialized time-series database.
+
+but how does the data flow? mqtt msg arrives at our python backend , the backend extracts the data from the message , and the data is then inserted into the data base
+now that we have a data base full of sensor data , we need a way to fetch and display it, thats where api comes in
+we will build a REST API using FASTAPI to fetch historical data and real time data as well , we will also provide authentication (so only authorized users can access it)
+ 
+ for frontend , we need a realtime web dashboard , we will build a react.js web  dashboard that displays live gpds locations on a map , shows temp over time , and updates realtime using websockets or mqtt over websockets
+ 
+how does the dashboard get data? it calls the api to get historical data , it subscribes to websockets to get real time updates . then it renders the data using Leaflet.js or google maps API for maps , and chart.js or recharts for graphs.
+
+for user authentication , jwt wuthentication for the backend , login and registration pages on the frontend.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
