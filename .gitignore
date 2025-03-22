@@ -1,0 +1,15 @@
+venv/
+train-env/
+
+__pycache__/
+*.pyc
+
+.env
+*.env
+
+.DS_Store
+
+archive
+
+archive.zip
+
